@@ -34,7 +34,7 @@ env.config();
 mongoose
   .connect(
 
-    `mongodb+srv://<trainticketapp>:<Something4ls4>@trainticket.nbnyhcs.mongodb.net/?retryWrites=true&w=majority`
+    `mongodb+srv://trainticketapp:Something4ls4@trainticket.nbnyhcs.mongodb.net/?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log('Database connected');
