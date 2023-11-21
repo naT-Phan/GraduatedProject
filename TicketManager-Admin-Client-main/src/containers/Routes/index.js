@@ -30,6 +30,7 @@ export const Routes = (props) => {
   const [searchResultsR, setSearchResultsR] = useState([]);
 
   const searchHandlerR = (searchTermR) => {
+    
     setSearchTermR(searchTermR);
     if (searchTermR !== "") {
       const newRoutes = state_route.routes.filter((route) => {

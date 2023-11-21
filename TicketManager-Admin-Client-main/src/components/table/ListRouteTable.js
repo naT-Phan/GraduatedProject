@@ -141,9 +141,13 @@ export const ListRouteTable = (props) => {
   };
 
   const returnNameLocation = (indexLocation) => {
-    if (indexLocation == 0) return "Hà Nội";
-    else if (indexLocation == 168) return "Sài Gòn";
-    return "";
+    // console.log(props);
+    for (let ent of listCity.cities) {
+      if (ent.indexCity === indexLocation){
+        return ent.name;
+      }
+    }
+
   };
 
   const routes = {

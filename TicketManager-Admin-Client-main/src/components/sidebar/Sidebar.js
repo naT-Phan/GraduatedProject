@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import logoImg from "../../asset/img/logo.png";
+import logoImg from "../../asset/img/Untitled.png";
 
 import sidebarItem from "../../asset/JsonData/sidebar_routes.json";
 import { SidebarItem } from "./SidebarItem";

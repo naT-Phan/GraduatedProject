@@ -4,10 +4,12 @@ import VehicleAction from "../../actions/vehicle.actions";
 import { Layout } from "../../components/Layout";
 import { ListTripTable } from "../../components/table/ListTripTable";
 import busImg from "../../asset/img/bus.png";
+import CityAction from "../../actions/city.actions";
 import TicketAction from "../../actions/ticket.actions";
 import RouteAction from "../../actions/route.actions";
 import { useParams } from "react-router-dom";
 import SteersmanAction from "../../actions/steersman.actions";
+
 
 /**
  * @author
@@ -21,6 +23,7 @@ export const RouteDetails = (props) => {
   const state_routeDetails = useSelector((state) => state.route.routeDetails);
   const state_ticketR = useSelector((state) => state.ticketR);
   const state_Steersman = useSelector((state) => state.steersman);
+  const state_city = useSelector((state) => state.city);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -31,6 +34,7 @@ export const RouteDetails = (props) => {
     dispatch(VehicleAction.getAllVehicles());
     dispatch(SteersmanAction.getAllSteersman());
     dispatch(TicketAction.getAllTickets());
+    dispatch(CityAction.getAllCities());
   }, []);
   const { routeId } = useParams();
   const loadRouteDetails = () => {
@@ -44,12 +48,14 @@ export const RouteDetails = (props) => {
     // dispatch(TicketAction.getAllTickets());
     //dispatch(getRouteDetailssByIdInEnterprise(payload));
   };
-
+  const listCity = props.listCity;
   if (Object.keys(state_routeDetails).length === 0) {
     return null;
   }
 
   const getAllVehiclesOfEnterprise = (idEnterprise, vehicles) => {
+    console.log(state_city);
+    
     let result = [];
     for (let v of vehicles) {
       if (v.idEnterprise === idEnterprise) {
@@ -84,12 +90,20 @@ export const RouteDetails = (props) => {
     }
   };
 
+  // const returnNameLocation = (indexLocation) => {
+  //   if (indexLocation == 0) return "Hà Nội";
+  //   else if (indexLocation == 168) return "Sài Gòn";
+  //   return "";
+  // };
   const returnNameLocation = (indexLocation) => {
-    if (indexLocation == 0) return "Hà Nội";
-    else if (indexLocation == 168) return "Sài Gòn";
-    return "";
-  };
+    
+    for (let ent of state_city.cities) {
+      if (ent.indexCity === indexLocation){
+        return ent.name;
+      }
+    }
 
+  };
   return (
     <Layout sidebar>
       <div className="enterprise-info">
