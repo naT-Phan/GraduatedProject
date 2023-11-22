@@ -33,7 +33,7 @@ export const Rules = () => {
   };
 
   const handleSubmitChangeRegulation = () => {
-    axios.put(`http://localhost:2000/api/rule/629f47b2ad18e2f9b52514dd`, rules);
+    axios.put(`http://localhost:2002/api/rule/629f47b2ad18e2f9b52514dd`, rules);
     for (let t of listTrip) {
       updateWagonTicket(t._id, t.fixed_price);
     }
@@ -52,12 +52,15 @@ export const Rules = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:2000/api/rule`)
+      .get(`http://localhost:2002/api/rule`)
       .then(function (response) {
         return response.data;
       })
       .then(function (data) {
         const items = data;
+        if(items === null || items.length === 0){
+          return;
+        }
         setRules({
           book: items[0].book,
           cancel: items[0].cancel,

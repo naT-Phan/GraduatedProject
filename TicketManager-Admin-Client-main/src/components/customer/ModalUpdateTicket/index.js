@@ -108,7 +108,7 @@ export const ModalUpdateTicket = (props) => {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:2000/api/location/fetch`)
+      .get(`http://localhost:2002/api/location/fetch`)
       .then(function(response) {
         return response.data;
       })

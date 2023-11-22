@@ -86,17 +86,15 @@ exports.fetchAll = async (req, res) => {
     const cities = await City.find();
     const rule = await Rule.findOne();
     const curHour = new Date().getHours();
-    const curDay = new Date().getDay();
-    const curMonth = new Date().getMonth();
-    const curYear = new Date().getYear();
+    const curDay = new Date().getDate();
+    const curMonth = new Date().getMonth() + 1;
+    const curYear = new Date().getFullYear();
 
     const filteredRoutes = routes.filter(route => {
       let isValid = true;
-      if (`${curYear}/${curMonth}/${curDay}` === startDate) {
+      if (`${curYear}-${curMonth}-${curDay}` === startDate) {
         isValid =
-          isValid &&
-          (route.endLocation - route.startLocation) * (endIndex - startIndex) > 0 &&
-          route.startTime - curHour > rule.book;
+          isValid && (route.endLocation - route.startLocation) * (endIndex - startIndex) >= 0;
         return isValid;
       } else {
         isValid =
@@ -105,12 +103,16 @@ exports.fetchAll = async (req, res) => {
       }
     });
 
+    console.log(routes);
+
     const filteredTrips = trips.filter(trip => {
       for (let route of filteredRoutes) {
         if (trip.idRoute.toString() == route._id.toString()) {
           let isValid = true;
-          isValid = isValid && trip.startDate == new Date(startDate).toString();
-
+          isValid = isValid 
+            && trip.startDate.getDate() === new Date(startDate).getDate()
+            && trip.startDate.getMonth() === new Date(startDate).getMonth()
+            && trip.startDate.getFullYear() === new Date(startDate).getFullYear();
           return isValid;
         }
       }
@@ -118,6 +120,8 @@ exports.fetchAll = async (req, res) => {
 
     let totalCities = 0;
     cities.map(() => (totalCities += 1));
+
+    
 
     filteredTrips.map(trip => {
       let result = {};
